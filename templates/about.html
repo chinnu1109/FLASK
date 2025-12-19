@@ -1,26 +1,295 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Neon Flux</title>
+    <style>
+        :root {
+            --primary: #00ffff;
+            --secondary: #00ff9d;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+            --accent: #ff00ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 157, 0.05) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Section */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Dynamic Data Section */
+        .dynamic-section {
+            background: rgba(0, 255, 255, 0.03);
+            border-radius: 30px;
+            padding: 50px;
+            margin-top: 60px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .dynamic-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .user-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .user-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .user-tag:hover {
+            background: var(--primary);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .user-tag::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .stat-item p {
+            color: #777;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            color: #555;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Hi {{name}}</h1>
+    <div class="container">
+        <header>
+            <h1>Hi, {{ name }}!</h1>
+            <p class="subtitle">Welcome to the inner sanctum of Neon Flux. Explore our mission, connect with our
+                members, and dive into the digital frontier.</p>
+        </header>
 
-<ul>
-    {% for na in namelistdata %}
-        <li>my name is {{na}}</li>
-    {% endfor %}
-</ul>
+        <div class="grid">
+            <div class="card animate-up" style="animation-delay: 0.1s;">
+                <h2>Our Mission</h2>
+                <p>To redefine the boundaries of interactive web experiences using cutting-edge Flask architectures and
+                    neon-infused aesthetics.</p>
+            </div>
+            <div class="card animate-up" style="animation-delay: 0.2s;">
+                <h2>System Status</h2>
+                <p>Global operations are currently active. All nodes are reporting nominal values with 99.9% uptime
+                    across the digital matrix.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Uptime</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>0ms</h3>
+                        <p>Latency</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card animate-up" style="animation-delay: 0.3s;">
+                <h2>Project: {{ title or 'The Flask Initiative' }}</h2>
+                <p>Building scalable, robust, and beautiful server-side applications that empower creators around the
+                    world.</p>
+            </div>
+        </div>
 
-<h1>{{title}}</h1>
-<h1>{{current_user}}</h1>
+        <div class="dynamic-section animate-up" style="animation-delay: 0.4s;">
+            <div class="dynamic-header">
+                <h2>Collective Members</h2>
+                <span style="color: var(--secondary);">Active Session: {{ current_user or 'Anonymous' }}</span>
+            </div>
 
-<ul>
-    {% for na in users %}
-        <li>my name is {{na.name}}</li>
-    {% endfor %}
-</ul>
+            <p style="margin-bottom: 20px; color: #888;">Core contributors and registered citizens of the Neon Flux
+                ecosystem:</p>
+
+            <ul class="user-list">
+                {% for na in users %}
+                <li class="user-tag">{{ na.name }}</li>
+                {% endfor %}
+
+                {% for na in namelistdata %}
+                <li class="user-tag" style="border-color: var(--accent);">{{ na }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-btn">← Return to Mainframe</a>
+        </div>
+
+        <footer>
+            &copy; 2025 Neon Flux. Powered by Passion and Flask.
+        </footer>
+    </div>
 
 </body>
+
 </html>
