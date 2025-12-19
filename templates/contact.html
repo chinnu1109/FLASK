@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Contact Us - Neon Flask</title>
+	<style>
+		* { box-sizing: border-box; margin:0; padding:0; }
+		body {
+			background: #000;
+			color: #fff;
+			font-family: 'Segoe UI', Tahoma, sans-serif;
+			min-height: 100vh;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+			padding: 30px;
+		}
+		.card {
+			background: rgba(20,20,20,0.9);
+			padding: 34px;
+			border-radius: 16px;
+			max-width: 700px;
+			width: 100%;
+			text-align: center;
+		}
+		h1 { font-size: 2rem; margin-bottom: 8px; }
+		p { color: #0fffa0; margin-bottom: 18px; }
+		form { margin-top: 8px; text-align: left; }
+		input, textarea {
+			width: 100%;
+			padding: 12px 14px;
+			margin: 8px 0;
+			border-radius: 10px;
+			border: 1px solid rgba(0,255,255,0.15);
+			background: rgba(0,255,255,0.03);
+			color: #fff;
+			resize: vertical;
+			font-size: 1rem;
+		}
+		.submit-btn {
+			display: inline-block;
+			background: linear-gradient(135deg, #ff00ff, #ff0080);
+			color: #fff;
+			padding: 12px 28px;
+			border: none;
+			border-radius: 40px;
+			font-weight: 700;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+		.result {
+			margin-top: 18px;
+			padding: 12px;
+			background: rgba(0,255,157,0.06);
+			border: 1px solid rgba(0,255,157,0.18);
+			border-radius: 10px;
+			color: #bff;
+		}
+		.back { display:inline-block; margin-top:14px; color:#000; background:#0ff; padding:10px 18px; border-radius:30px; text-decoration:none; font-weight:700; }
+	</style>
+</head>
+<body>
+	<div class="card">
+		<h1>📧 Contact Us</h1>
+		<p>We'd love to hear from you! Fill the form below.</p>
+
+		<form id="contactForm" method="POST">
+			<input type="text" id="name" name="name" placeholder="Your Name" required />
+			<input type="tel" id="mobile" name="mobile" placeholder="Your Mobile Number" required />
+			<input type="email" id="email" name="email" placeholder="Your Email" required />
+			<textarea id="message" name="message" placeholder="Your Message" required></textarea>
+
+			<button class="submit-btn" type="submit">Send Message</button>
+		</form>
+
+		<!-- Results Display Section -->
+		<div id="resultSection" class="result" style="display:none;">
+			<h3 style="color:#0fffa0; margin-bottom:8px; text-align:center;">✅ Message Submitted Successfully!</h3>
+			<div id="resultContent" style="color:#cfe;"></div>
+		</div>
+
+		<div style="text-align:center;">
+			<a href="/index" class="back">← Back to Home</a>
+		</div>
+	</div>
+
+	<script>
+		// Submit using fetch to /contact (same route that handles GET + POST)
+		document.getElementById('contactForm').addEventListener('submit', function (e) {
+			e.preventDefault(); // stop normal form submit
+
+			const form = this;
+			const formData = new FormData(form);
+
+			fetch('/contact', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => {
+				if (!response.ok) {
+					// try to read response text for helpful error details
+					return response.text().then(text => { throw new Error(text || response.statusText); });
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.success) {
+					const rc = document.getElementById('resultContent');
+					rc.innerHTML = `
+						<div><strong>Name:</strong> ${data.data.name || ''}</div>
+						<div><strong>Mobile:</strong> ${data.data.mobile || ''}</div>
+						<div><strong>Email:</strong> ${data.data.email || ''}</div>
+						<div><strong>Message:</strong> ${data.data.message || ''}</div>
+					`;
+					document.getElementById('resultSection').style.display = 'block';
+					document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+					// optional: form.reset();
+				} else {
+					alert('Submission failed: ' + (data.error || 'Unknown error'));
+				}
+			})
+			.catch(err => {
+				console.error('Error submitting form:', err);
+				alert('An error occurred: ' + (err.message || 'Please try again.'));
+			});
+		});
+	</script>
+</body>
+</html>

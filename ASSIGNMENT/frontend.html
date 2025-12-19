@@ -1,0 +1,10 @@
+<button onclick="callAPI()">Call Backend</button>
+
+<script>
+    function callAPI() {
+        fetch("http://localhost:5000/data")
+            .then(res => res.json())
+            .then(data => alert(data.message))
+            .catch(err => alert("CORS ERROR"));
+    }
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Welcome - Neon Flask</title>
+    <style>
+        /* (simple styling — keep it small for clarity) */
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: rgba(20,20,20,0.85);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 520px;
+            width: 90%;
+        }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        p { color: #9ef; margin-bottom: 20px; }
+        .neon-link, .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #000;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>HELLO WORLD 👋</h1>
+        <p>✨ Welcome to Your Flask Neon Experience ✨</p>
+
+        <div style="margin-top: 16px;">
+            <a href="/contact" class="neon-link">📧 Contact Us</a>
+        </div>
+
+        <form action="https://www.geeksforgeeks.org/python/flask-tutorial/" style="margin-top: 20px;">
+            <button class="btn" type="submit">Explore Flask</button>
+        </form>
+    </div>
+</body>
+</html>

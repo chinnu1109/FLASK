@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Content Display</title>
+</head>
+
+<body>
+
+    <h1 id="message-display">Loading...</h1>
+
+    <script>
+        // Check if source is provided via server-side template
+        const serverSource = "{{ source if source else '' }}";
+
+        async function fetchApi1(source) {
+            const displayHeader = document.getElementById('message-display');
+
+            try {
+                // Call our local Flask endpoint with the source parameter
+                const response = await fetch(`/api/check_source?source=${source}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+
+                // Display only the message in the h1 tag
+                displayHeader.textContent = data.message;
+            } catch (error) {
+                displayHeader.textContent = "Error: " + error.message;
+            }
+        }
+
+        // Auto-load if source is present
+        if (serverSource) {
+            fetchApi1(serverSource);
+        } else {
+            document.getElementById('message-display').innerHTML = "Please provide a source in the URL (e.g. /api_view/abacus)";
+        }
+    </script>
+</body>
+
+</html>
