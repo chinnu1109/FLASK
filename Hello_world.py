@@ -10,6 +10,10 @@ def root():
 def home():
     return render_template("index.html")
 
+@app.route('/index1')
+def home():
+    return render_template("index.html")
+
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
